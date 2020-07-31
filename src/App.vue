@@ -4,7 +4,7 @@
     <ul class="list-group">
       <template v-for="zone in zones(items)">
         <li v-bind:key="zone" class="list-group-item active">
-          {{ zone.length ? zone : 'Other' }}
+          {{ zone.length ? zone : 'Unzoned' }}
         </li>
 
         <template v-for="item in buildings(items, zone)">
@@ -56,8 +56,21 @@ export default {
       )
       .then((response) => {
         this.items = response.data.data.items.sort((a, b) => {
-          const aZone = a.buildingzone.length ? a.buildingzone : 'zzzzz';
-          const bZone = b.buildingzone.length ? b.buildingzone : 'zzzzz';
+          var aZone = a.buildingzone;
+          var bZone = b.buildingzone;
+
+          if (aZone == 'Other Bay Area') {
+            aZone = 'zzzzz';
+          } else if (aZone.length == 0) {
+            aZone = 'zzzzzz';
+          }
+
+          if (bZone == 'Other Bay Area') {
+            bZone = 'zzzzz';
+          } else if (bZone.length == 0) {
+            bZone = 'zzzzzz';
+          }
+
           if (aZone + a.buildingname < bZone + b.buildingname) return -1;
           if (aZone + a.buildingname > bZone + b.buildingname) return 1;
           return 0;
