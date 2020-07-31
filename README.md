@@ -1,4 +1,4 @@
-# code-chalenge-vue
+# Blueriver Coding Challenge - Vue.js version
 
 ## Project setup
 ```
